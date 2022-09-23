@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 namespace Core
@@ -13,7 +11,6 @@ namespace Core
         private NavMeshAgent _navMeshAgent;
         private Weapon _weapon;
         private Animator _animator;
-
 
         private void Awake()
         {
@@ -63,21 +60,6 @@ namespace Core
 
                 _weapon.Shoot(screenPosition);
             }
-        }
-
-        private IEnumerator WaitingReachDestination(Vector3 destination, Action onDestination)
-        {
-            _navMeshAgent.SetDestination(destination);    
-            
-            _animator.SetBool("Walk", true);
-            
-            yield return new WaitUntil(() => _navMeshAgent.velocity.sqrMagnitude > float.Epsilon);
-            
-            yield return new WaitUntil(() => _navMeshAgent.velocity.sqrMagnitude < float.Epsilon);
-            
-            _animator.SetBool("Walk", false);
-
-            onDestination?.Invoke();
         }
     }
 }
